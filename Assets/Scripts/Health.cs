@@ -34,24 +34,43 @@ public class Health : MonoBehaviour, IDamageable
         _currentHealth = _maxHealth;
     }
 
-    public void Update()
-    {
-        
-    }
-
     public void takeDamage(int damage)
     {
-        _currentHealth -= damage;
         Feedback();
 
         if (this.gameObject.GetComponent<IDamageable>() != null)
         {
             if (this.gameObject.GetComponent<PlayerMovement>() != null)
             {
-                PlayerDamaged.Invoke(damage);
+                Inventory test = this.gameObject.GetComponent<Inventory>();
+                Armor testArmor = test.getArmor();
+                float armorMod = test.getArmorDmgMod();
+                
+                if(testArmor != null)
+                {
+                    int damageRounded = (int)Math.Round(armorMod * damage);
+
+                    Debug.Log("Player Damaged for " + damageRounded + ". Current health: " + _currentHealth);
+
+                    _currentHealth -= damageRounded;
+
+                    PlayerDamaged.Invoke(damageRounded);
+
+
+                }
+                else
+                {
+                    _currentHealth -= damage;
+
+                    PlayerDamaged.Invoke(damage);
+                    Debug.Log("Player Damaged: " + damage);
+                    
+                }
+
             }
             else
             {
+                _currentHealth -= damage;
                 BossDamaged.Invoke(damage);
             }
             

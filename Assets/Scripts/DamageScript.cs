@@ -22,7 +22,7 @@ public class DamageScript : MonoBehaviour
             {
                 IDamageable dmgPlayer = collider.GetComponent<IDamageable>();
 
-                dmgPlayer.takeDamage(15);
+                dmgPlayer.takeDamage(40);
             }
         }
 
@@ -35,7 +35,14 @@ public class DamageScript : MonoBehaviour
             {
                 IDamageable dmgPlayer = collider.GetComponent<IDamageable>();
 
-                dmgPlayer.takeDamage(150);
+                Inventory test = FindObjectOfType<Inventory>();
+
+                int damage = test.getWeaponDamage();
+
+                
+                dmgPlayer.takeDamage(damage);
+
+                Debug.Log("Boss damaged : " + damage);
             }
         }
     }

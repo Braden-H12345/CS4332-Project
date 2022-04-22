@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Test
   movespeedMod: 0.9
-  damageMod: 0.4
+  damageMod: 0.1

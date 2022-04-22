@@ -7,13 +7,18 @@ public class HealthBar : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    [SerializeField] Slider _healthSlider = null;
+    private Slider _healthSlider;
 
 
     //this will be either the boss or player. As both have different max Healths it allows one script to function identically
     public GameObject _objectToTrack;
 
     private Health Health;
+
+    private void Awake()
+    {
+        _healthSlider = this.GetComponent<Slider>();
+    }
 
     void Start()
     {
@@ -22,6 +27,7 @@ public class HealthBar : MonoBehaviour
         _healthSlider.value = Health.MaxHealth;
 
         OnEnable();
+
     }
 
     // Update is called once per frame
@@ -32,14 +38,16 @@ public class HealthBar : MonoBehaviour
 
     private void OnEnable()
     {
-        Health.PlayerDamaged += UpdateUI;
-
-        Health.BossDamaged += UpdateUI;
+     
+       Health.PlayerDamaged += UpdateUI;
+       Health.BossDamaged += UpdateUI;
+        
     }
 
     void UpdateUI(int damage)
     {
         _healthSlider.value = Health.CurrentHealth;
+        
     }
 
     private void OnDisable()

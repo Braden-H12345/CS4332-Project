@@ -5,33 +5,46 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public CharacterController player;
-    public Transform cam;
 
-    public float speed = 6f;
+    public float speed = 12f;
+    public float gravity = -9.81f;
+    public float jumpHeight = 4f;
 
-    public float turnTime = 1.25f;
+    public Transform groundCheck;
+    public float groundDistance = 0.4f;
+    public LayerMask groundMask;
 
-    float turnVelocity;
+
+    Vector3 velocity;
+    bool isGrounded;
+
+
 
     // Update is called once per frame
     void Update()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
-        if(direction.magnitude > 0)
+        if(isGrounded && velocity.y < 0)
         {
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnVelocity, turnTime);
-
-            transform.rotation = Quaternion.Euler(0, angle, 0);
-
-            Vector3 moveDirection = Quaternion.Euler(0, targetAngle, 0) * Vector3.forward;
-            player.Move(moveDirection.normalized * speed * Time.deltaTime);
+            velocity.y = -1f;
         }
 
+        float x = Input.GetAxis("Horizontal");
+        float z = Input.GetAxis("Vertical");
 
+        Vector3 move = transform.right * x + transform.forward * z;
 
+        player.Move(move * speed * Time.deltaTime);
+
+        if(Input.GetButtonDown("Jump") && isGrounded)
+        {
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        }
+
+        velocity.y += gravity * Time.deltaTime;
+
+        player.Move(velocity * Time.deltaTime);
     }
+
 }

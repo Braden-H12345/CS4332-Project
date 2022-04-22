@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Test
   image: {fileID: 0}
-  damage: 15
+  damage: 500
   armorMod: 1
