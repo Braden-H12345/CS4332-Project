@@ -7,6 +7,7 @@ public class Health : MonoBehaviour, IDamageable
 {
     public event Action<int> PlayerDamaged = delegate { };
     public event Action<int> BossDamaged = delegate { };
+    public event Action<bool> BossKilled = delegate { };
 
     [SerializeField] int _maxHealth = 100;
     [SerializeField] ParticleSystem _damageParticles;
@@ -102,6 +103,7 @@ public class Health : MonoBehaviour, IDamageable
 
     public void Kill()
     {
+        BossKilled.Invoke(true);
         gameObject.SetActive(false);
     }
 
