@@ -26,7 +26,7 @@ public class SceneController : MonoBehaviour
     void Kill(bool test)
     {
         currentScene ++;
-        SceneManager.LoadScene(currentScene);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     private void OnDisable()
@@ -38,7 +38,7 @@ public class SceneController : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            Application.Quit();
+            SceneManager.LoadScene(0);
         }
     }
 }
