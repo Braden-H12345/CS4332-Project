@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
+    [SerializeField] AudioClip swingSound;
     public GameObject Weapon;
     public float AttackCooldown = 1.0f;
     public bool isAttacking = false;
     private bool CanAttack = true;
+    
 
 
     private void Update()
@@ -27,6 +29,7 @@ public class PlayerAttack : MonoBehaviour
         CanAttack = false;
         Animator anim = Weapon.GetComponent<Animator>();
         anim.SetTrigger("Attack");
+        AudioHelper.PlayClip2D(swingSound, 1f);
 
         StartCoroutine(ResetAttack());
     }

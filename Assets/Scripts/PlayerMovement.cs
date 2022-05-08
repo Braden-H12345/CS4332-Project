@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] GameObject stunnedVisuals;
     public CharacterController player;
 
     public float speed = 12f;
@@ -17,12 +18,26 @@ public class PlayerMovement : MonoBehaviour
 
     Vector3 velocity;
     bool isGrounded;
+    bool isStunned;
 
+    public bool getGrounded()
+    {
+        return isGrounded;
+    }
+
+    public void setStunned(bool set)
+    {
+        isStunned = set;
+    }
 
 
     // Update is called once per frame
     void Update()
     {
+        if(isStunned)
+        {
+            stunnedVisuals.SetActive(true);
+        }
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         if(isGrounded && velocity.y < 0)
@@ -30,21 +45,25 @@ public class PlayerMovement : MonoBehaviour
             velocity.y = -1f;
         }
 
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
-
-        Vector3 move = transform.right * x + transform.forward * z;
-
-        player.Move(move * speed * Time.deltaTime);
-
-        if(Input.GetButtonDown("Jump") && isGrounded)
+        if(isStunned == false)
         {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            stunnedVisuals.SetActive(false);
+            float x = Input.GetAxis("Horizontal");
+            float z = Input.GetAxis("Vertical");
+
+            Vector3 move = transform.right * x + transform.forward * z;
+
+            player.Move(move * speed * Time.deltaTime);
+
+            if (Input.GetButtonDown("Jump") && isGrounded)
+            {
+                velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            }
+
+            velocity.y += gravity * Time.deltaTime;
+
+            player.Move(velocity * Time.deltaTime);
         }
-
-        velocity.y += gravity * Time.deltaTime;
-
-        player.Move(velocity * Time.deltaTime);
     }
 
 }

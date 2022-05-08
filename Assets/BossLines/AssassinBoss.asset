@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a36d66d63910c854da942a5b2316a843, type: 3}
+  m_Name: AssassinBoss
+  m_EditorClassIdentifier: 
+  name: Gilbert, Warrior Assassin
+  line1: Thanks for doing us all a favor and defeating that oaf!
+  line2: Bah, your skills are alright.... calm down tough guy
+  line3: This next fight.... be warned... the memories might COME BACK.

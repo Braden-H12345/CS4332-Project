@@ -39,7 +39,6 @@ public class TankBossController : MonoBehaviour
     void Update()
     {
         
-        
         timeElapsed += Time.deltaTime;
 
         if(timeElapsed > 1.5 && firstCheck)

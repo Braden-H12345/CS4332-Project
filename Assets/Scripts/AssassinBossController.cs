@@ -15,6 +15,8 @@ public class AssassinBossController : MonoBehaviour
     [SerializeField] ParticleSystem flameParticles;
     [SerializeField] ParticleSystem teleportParticles;
     [SerializeField] Transform BackhandObject;
+    [SerializeField] AudioClip teleportSound;
+    [SerializeField] AudioClip igniteSound;
     private Animator anim;
     private bool canMove = true;
     private bool isWalking = false;
@@ -116,6 +118,7 @@ public class AssassinBossController : MonoBehaviour
         isWalking = false;
         isAttacking = false;
         canMove = false;
+        AudioHelper.PlayClip2D(teleportSound, 1f);
         teleportParticles.Play();
         visualsToDisable.SetActive(false);
 
@@ -142,8 +145,7 @@ public class AssassinBossController : MonoBehaviour
         {
             canAttack = false;
             //attack stuff
-            int attackVal = //Random.Range(1, 30);
-                25;
+            int attackVal = Random.Range(1, 30);
             if (isAttacking == false)
             {
                 isWalking = false;
@@ -162,6 +164,7 @@ public class AssassinBossController : MonoBehaviour
                 else if (attackVal <= 20)
                 {
                     canMove = false;
+                    AudioHelper.PlayClip2D(igniteSound, 1f);
                     anim.SetTrigger("Ignite");
                     yield return new WaitForSeconds(.5f);
                     flameParticles.Play();
